@@ -1,0 +1,62 @@
+var SINA_ARTICLE_PAGE_SETTINGS = {
+  comment: {
+    group: 0,
+    page: 1,
+    pageSize: 20,
+    showReplay: true,
+    maxWordCount: 140,
+    hotPageNum: 3,
+    firstPageNum: 10,
+    clickMoreTimes: 3
+  },
+  isPad: (function() {
+    var arr = ["ipad", "mi-pad"],
+      android = 'Android',
+      len = arr.length,
+      userAgent = navigator.userAgent.toLowerCase(),
+      valid = false;
+
+    for(var i=0;i<len;i++){
+      var txt = (arr[i] + "").toLowerCase(),
+      reg = new RegExp(txt,"i"),
+      reg_android = new RegExp(android,"i");
+      valid = (userAgent.match(reg) == txt && (txt == 'ipad' ? true : userAgent.match(reg_android) == android.toLowerCase()));
+      if(valid === true){
+        break;
+      }
+    };
+    return valid;
+  })()
+};
+
+function __getQuery(){
+    var refer = document.referrer;
+    if(refer) {
+      var theKey = '';
+      if(refer.indexOf('http://www.baidu.com/') == 0) {
+        theKey = 'wd';
+      } else if(refer.indexOf('http://www.so.com/') == 0) {
+        theKey = 'q';
+      } else if(refer.indexOf('http://www.sogou.com/') == 0) {
+        theKey = 'query';
+      } else if(refer.indexOf('http://cn.bing.com/') == 0) {
+        theKey = 'q';
+      } else if(refer.indexOf('http://search.sina.com.cn/') == 0) {
+        theKey = 'q';
+      }
+      if(theKey) {
+        var queryIndex = refer.indexOf('?');
+        var query = refer.substring(queryIndex + 1);
+        var queryArray = query.split('&');
+        for(var i = 0; i < queryArray.length; i ++) {
+          if(queryArray[i].indexOf(theKey) == 0) {
+            return '&query=' + queryArray[i].substring(theKey.length + 1);
+          }
+        }
+        return '';
+      }
+      return '';
+    } else {
+      return '';
+    }
+};

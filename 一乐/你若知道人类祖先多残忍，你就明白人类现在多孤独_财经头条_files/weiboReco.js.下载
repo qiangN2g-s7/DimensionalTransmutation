@@ -1,0 +1,331 @@
+function initWbUsersRec(conf){
+    var defSource = Weibo.appKey;
+    //var source = conf.source || Weibo.appKey;
+    var source = 2887280153;
+    var groupId = conf.groupId;
+    Weibo.Login.autoLogin();
+    var S = SINA, E = S.Event, IO = S.IO, Q = S.query;
+    var _addListener = E.addListener;
+    var _delegate = E.delegate;
+    var _alert = Weibo.Widgets.Messages.alert;
+
+    var recW= _id('wb_rec');
+    var recWb = _id('wb_rec_wb');
+    var recList = _id('wb_rec_list');
+    var btn_fl = _id('wb_rec_fl');
+    var btn_more = _id('wb_rec_more');
+    var btn_more1 = _id('wb_rec_more1');
+    var btn_fled = _id('wb_rec_fled');
+
+    var eventInited = false;
+    var refreshed = false;
+    var requesting = false;
+    // weibo\u7EC4\u4EF6\u5185\u90E8\u6709\u767B\u9646bug\uFF0C\u8FD9\u6837\u5904\u7406
+    var callbacked = false;
+    var callbackedItv;
+    var meUid;
+
+    try{
+        meUid = sinaSSOController.getSinaCookie().uid;
+    }
+    catch(e){}
+
+    _refreshDom(meUid);
+
+    function _id (id) {
+        return document.getElementById(id);
+    }
+
+    function _substr (str, a, b) {
+        var s = str.replace(/([^\x00-\xff])/g, "\x00$1");
+        return (s.length < b) ? str : (s.substring(a, b - 3).replace(/\x00/g, '') + '...');
+    }
+
+    function _refreshDom (uid) {
+        var url = 'http://wp.news.sina.com.cn/?s=api&a=get_group_vuser&group_id=' + groupId + (uid ? ('&uid=' + uid) : '') + '&format=json';
+        var onSuccess = function (d) {
+            if(d.result.status.code != 0 || d.result.data.uids.length == 0){ return}
+            _renderWeibo(d.result.data);
+            _renderUserList(d.result.data);
+            _initRecEvent();
+            recW.style.display = 'block';
+            _enableBtn(true);
+        };
+        if(uid){
+            refreshed = true;
+        }
+        _getJSONP(url, onSuccess);
+    }
+
+    function _renderWeibo (data) {
+        var mids = data.mids;
+        var midsLen = mids.length;
+        var theMid = mids[parseInt(Math.random() * midsLen, 10)];
+        // var mid = '3636862734495143';
+        // var url = 'http://api.sina.com.cn/weibo/2/statuses/show.json?source=4526198296&id=' + mid;
+        var url = 'http://api.sina.com.cn/weibo/2/statuses/show.json?source=2887280153&id=' + theMid;
+        var para = '';
+        var onSuccess = function (d) {
+            var data = d.result.data;
+            recWb.innerHTML = '\
+                <span class="wb_rec_pic_w">\
+                  <a href="http://weibo.com/u/' + data.user.id + '" target="_blank"><img src="' + data.user.profile_image_url + '" alt="' + data.user.screen_name + '" class="wb_rec_pic"></a><span class="wb_rank_check checked" data-uid="' + data.user.id + '"></span>\
+                </span>\
+                <p class="wb_rec_wb_c"><a target="_blank" class="wb_rec_wb_user" href="http://weibo.com/u/' + data.user.id + '">' + data.user.screen_name + '</a>\uFF1A<a class="wb_rec_wb_text" target="_blank" href="http://weibo.com/' + data.user.id + '/' + data.proxy_mid_base62 + '">'+ data.text + (data.thumbnail_pic ? '<span title="\u70B9\u51FB\u67E5\u770B\u56FE\u7247" class="wb_rec_wb_pic"></span></a>' : '') + '</p>';
+            recWb.style.display = 'block';
+        };
+        if(midsLen == 0) return;
+        recWb.innerHTML = '';
+        IO.getJSONP(url, para, onSuccess);
+    }
+
+    function _renderUserList (data) {
+        var uids = _getRandom(data.uids, 10);
+        var group = data.group;
+        var uidsLen = uids.length;
+        var i = 0;
+        var listStr = [];
+        recList.innerHTML = '';
+        // var frag = document.createDocumentFragment();
+        for(var i = 0; i < uidsLen; i ++){
+            listStr.push('\
+                <li class="wb_rec_item">\
+                    <span class="wb_rec_pic_w" onmouseover="weiboCard.show({uid : ' + uids[i].uid + ', ele : this, appKey : ' + source + '});">\
+                        <a href="http://weibo.com/u/' + uids[i].uid + '" target="_blank">' + '<img src="' + uids[i].profile_image_url + '" alt="" class="wb_rec_pic"></a>\
+                        <span class="wb_rank_check checked" data-uid="' + uids[i].uid + '"></span>\
+                    </span>\
+                    <p class="wb_rec_name"><a href="http://weibo.com/u/' + uids[i].uid + '" target="_blank">' + _substr(uids[i].name, 0, 14) + '</a></p>\
+                    <p class="wb_rec_detail">' + _substr(uids[i].v_reason, 0, 16) + '</p>\
+                </li>\
+                ');
+        }
+        listStr = listStr.join('');
+        recList.innerHTML = listStr;
+        // recList.appendChild(frag);
+        btn_more.innerHTML = '\u5173\u6CE8\u66F4\u591A' + group.mark;
+        btn_more.href = 'http://wp.news.sina.com.cn/?s=default&a=fans_list_view&group_id=' + group.id;
+        btn_more1.href = 'http://wp.news.sina.com.cn/?s=default&a=fans_list_view&group_id=' + group.id;
+    }
+
+    function _initRecEvent () {
+        if(eventInited) return;
+        _addListener(btn_fl, 'click', function (e) {
+            if(requesting) return;
+            var cked = Q('.checked', recW);
+            var ckedLen = cked.length;
+            var uids = [];
+            if(ckedLen == 0){
+                _alert('\u8BF7\u9009\u62E9\u5173\u6CE8\u7528\u6237', 'wrong');
+                return;
+            }
+            try{
+                SUDA.uaTrack("content_weibo_user", "contentfo:" + ckedLen);
+            }
+            catch(e){}
+            for(var i = 0; i < ckedLen; i++){
+                uids.push(cked[i].getAttribute('data-uid'));
+            }
+            uids = uids.join(',');
+            if(!Weibo.Login.check()){
+                var loginDlg = Weibo.Widgets.getLoginDialog();
+                loginDlg.loginCallbackOnce = function() {
+                    try{
+                      SINA_OUTLOGIN_LAYER.listener.fire("login_success");
+                    }
+                    catch(e){}
+                    requesting = true;
+                    callbacked = true;
+                    // \u5B9A\u5236source
+                    Weibo.appKey = source;
+                    Weibo.apis.batchFollow({
+                        data: {uids: uids},
+                        onsuccess: function() {
+                            var uid;
+                            try{
+                                uid = sinaSSOController.getSinaCookie().uid;
+                            }
+                            catch(e){}
+                            for(var i = 0; i < ckedLen; i ++){
+                                cked[i].setAttribute('data-followed', '1');
+                            }
+                            _alert('\u5173\u6CE8\u6210\u529F', 'right');
+                            if(!refreshed){
+                                _refreshDom(uid);
+                                refreshed = true;
+                            }
+                            requesting = false;
+                        },
+                        onfailure: function(st) {
+                            _alert('\u5173\u6CE8\u5931\u8D25', 'wrong');
+                            requesting = false;
+                        }
+                    });
+                    // \u8FD8\u539Fsource
+                    Weibo.appKey = defSource;
+                };
+                loginDlg.show();
+                if (!callbackedItv) {
+                    callbackedItv = setInterval(function() {
+                        if (callbacked) {
+                            clearInterval(callbackedItv);
+                            callbackedItv = null;
+                            return;
+                        }
+                        if (!sinaSSOController.getSinaCookie()) {
+                            return;
+                        }
+                        try {
+                            loginDlg.hide();
+                            SINA_OUTLOGIN_LAYER.listener.fire("login_success");
+                        } catch (e) {}
+                        requesting = true;
+                        callbacked = true;
+                        // \u5B9A\u5236source
+                        Weibo.appKey = source;
+                        Weibo.apis.batchFollow({
+                            data: {uids: uids},
+                            onsuccess: function() {
+                                var uid;
+                                try{
+                                    uid = sinaSSOController.getSinaCookie().uid;
+                                }
+                                catch(e){}
+                                for(var i = 0; i < ckedLen; i ++){
+                                    cked[i].setAttribute('data-followed', '1');
+                                }
+                                _alert('\u5173\u6CE8\u6210\u529F', 'right');
+                                if(!refreshed){
+                                    _refreshDom(uid);
+                                    refreshed = true;
+                                }
+                                requesting = false;
+                            },
+                            onfailure: function(st) {
+                                _alert('\u5173\u6CE8\u5931\u8D25', 'wrong');
+                                requesting = false;
+                            }
+                        });
+                        // \u8FD8\u539Fsource
+                        Weibo.appKey = defSource;
+                    }, 1500);
+                }
+                return;
+            }
+            requesting = true;
+            callbacked = true;
+            // \u5B9A\u5236source
+            Weibo.appKey = source;
+            Weibo.apis.batchFollow({
+                data: {uids: uids},
+                onsuccess: function() {
+                    for(var i = 0; i < ckedLen; i ++){
+                        cked[i].setAttribute('data-followed', '1');
+                    }
+                    _alert('\u5173\u6CE8\u6210\u529F', 'right');
+                    _enableBtn(false);
+                    requesting = false;
+                },
+                onfailure: function(st) {
+                    _alert('\u5173\u6CE8\u5931\u8D25', 'wrong');
+                    requesting = false;
+                }
+            });
+            // \u8FD8\u539Fsource
+            Weibo.appKey = defSource;
+        });
+
+        try{
+            SAB.evt.custEvent.add(SAB, 'ce_login',function(e){
+                var uid = sinaSSOController.getSinaCookie().uid;
+                if(refreshed) return;
+                _refreshDom(uid);
+            },{});
+            SAB.evt.custEvent.add(SAB, 'ce_logout',function(e){
+                refreshed = false;
+            },{});
+        }
+        catch(e){}
+
+        _delegate(recW, 'click', '.wb_rank_check', function (e) {
+            var check = this;
+            var _className = check.className;
+            if(_className == 'wb_rank_check checked'){
+                check.className = 'wb_rank_check';
+            }
+            else{
+                check.className = 'wb_rank_check checked';
+            }
+            _checkBtn();
+        });
+        eventInited = true;
+    }
+
+    function _getRandom (list, num) {
+        if(list.length <= 10){
+            return list;
+        }
+        var ret = [];
+        var temp_array = [];
+        for (var i in list) {
+            temp_array.push(list[i]);
+        }
+        for (var i = 0; i < num; i++) {
+            if (temp_array.length > 0) {
+                var arrIndex = Math.floor(Math.random() * temp_array.length);
+                ret[i] = temp_array[arrIndex];
+                temp_array.splice(arrIndex, 1);
+            } else {
+                break;
+            }
+        }
+        return ret;
+    }
+
+    function _checkBtn () {
+        var ckAll, ckAllLen, enableBtn = false;
+        ckAll = Q('.checked', recW);
+        ckAllLen = ckAll.length;
+        if(ckAllLen == 0){
+            return
+        }
+        for(var i = 0; i < ckAllLen; i ++){
+            if(!ckAll[i].getAttribute('data-followed')){
+                enableBtn = true;
+                break;
+            }
+        }
+        _enableBtn(enableBtn);
+    }
+
+    function _enableBtn (enable) {
+        if(enable){
+            btn_fl.style.display = 'inline';
+            btn_fled.style.display = 'none';
+        }
+        else{
+            btn_fl.style.display = 'none';
+            btn_fled.style.display = 'inline';
+        }
+    }
+
+    function _getJSONP (url, callback) {
+        if (!url) {
+            return;
+        }
+        var dateStr = (Date.parse(new Date())).toString();
+        dateStr = dateStr.substring(0, 8);
+        var name = 'jsonp' + dateStr;
+        if (url.indexOf('?') === -1) {
+            url += '?callback=' + name;
+        } else {
+            url += '&callback=' + name;
+        }
+        // url += '&dpc=1';
+        var script = document.createElement('script');
+        window[name] = function (data) {
+            callback && callback(data);
+        }
+        script.src = url;
+        document.getElementsByTagName('head')[0].appendChild(script);
+    }
+}

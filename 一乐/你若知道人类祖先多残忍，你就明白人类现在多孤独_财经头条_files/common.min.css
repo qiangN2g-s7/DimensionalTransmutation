@@ -1,0 +1,161 @@
+@charset "gbk";
+
+a,a:visited{color:#333}
+.clearfix:after,.sv_option:after{content:".";visibility:hidden}
+body,dd,dl,dt,fieldset,form,h1,h2,h3,h4,h5,h6,html,img,legend,li,ol,p,ul{margin:0;padding:0}
+fieldset,img{border:none}
+address,caption,cite,code,dfn,th,var{font-style:normal;font-weight:400}
+ol,ul{list-style:none}
+input{padding-top:0;padding-bottom:0}
+input::-moz-focus-inner{border:none;padding:0}
+input,select{vertical-align:middle}
+input,select,textarea{font-size:12px;margin:0}
+input[type=text],input[type=password],textarea{outline-style:none;-webkit-appearance:none}
+textarea{resize:none}
+table{border-collapse:collapse}
+body{font:12px "Microsoft YaHei","\u5FAE\u8F6F\u96C5\u9ED1",Arial,SimSun,"\u5B8B\u4F53"}
+a{text-decoration:none}
+a:hover{color:#1976e8}
+.clearfix{zoom:1}
+.clearfix:after{clear:both;display:block;height:0}
+.sina-top-bar-ico,.sina-top-bar-nav-list li,.sina-top-bar-nav-txt{float:left;display:inline}
+.sina-top-bar-wrap a:link,.sina-top-bar-wrap a:visited{color:#333;text-decoration:none}
+.sina-top-bar-wrap a:active,.sina-top-bar-wrap a:hover{color:#1976e8;text-decoration:none}
+.sina-top-bar-wrap ul{list-style:none;padding:0;margin:0}
+.sina-top-bar-ico{font-size:0;margin:10px 0 0 10px;position:relative;overflow:hidden;background:url(http://i1.sinaimg.cn/dy/deco/2014/0718/top.png) no-repeat}
+.sina-top-bar-ico-list{width:15px;height:13px;margin:6px 8px 0 0;background-position:0 0}
+.sina-top-bar-ico-down{width:8px;height:4px;background-position:-40px 0}
+.sina-top-bar-wrap{border-top:3px solid #1976e8;background:#fbfbfb;border-bottom:1px solid #c7c7c7;min-width:1000px;z-index:10000;position:relative}
+.sina-top-bar-inner{width:1000px;height:57px;margin:0 auto;position:relative}
+.sina-top-bar-nav{font:14px/24px "Microsoft Yahei","\u5FAE\u8F6F\u96C5\u9ED1",SimSun,"\u5B8B\u4F53","Arial Narrow",serif;color:#333}
+.sina-top-bar-nav-list{position:absolute}
+.sina-top-bar-nav-list li a{float:left;height:24px;padding:17px 15px 16px;overflow:hidden}
+.sina-top-bar-nav-list .sina-top-bar-nav-first a{padding-left:0}
+.sina-top-bar-nav-other{border:1px solid #c7c7c7;border-top:0;left:0;position:absolute;right:0;top:58px;display:none;background:#fff}
+.sina-top-bar-nav-other li{float:left;display:inline}
+.sina-top-bar-nav-other li a{display:block;padding:13px 15px 12px}
+.sina-top-bar-nav-guide,.sina-top-bar-nav-more{padding:0 1px;zoom:1}
+.sina-top-bar-nav-list .sina-top-bar-nav-guide{margin-right:15px;display:none}
+.sina-top-bar-tip{float:right;display:inline;width:87px;height:37px;margin:6px 5px 0 0;background:url(http://i1.sinaimg.cn/dy/deco/2014/0725/toptip.png) no-repeat}
+.sina-top-bar-tip:hover{filter:alpha(opacity=80);opacity:.8}
+.sina-top-bar-nav-other .sina-top-bar-nav-mlnk{display:none}
+.sina-top-bar-nav-show .sina-top-bar-nav-guide,.sina-top-bar-nav-show .sina-top-bar-nav-more{padding:0;border:1px solid #cacaca;border-top:0;border-bottom:2px solid #fff;background:#fff}
+.sina-top-bar-nav-show .sina-top-bar-nav-other{display:block}
+.sina-top-bar-nav-show .sina-top-bar-ico-list,a:hover .sina-top-bar-ico-list{background-position:-20px 0}
+.sina-top-bar-nav-show .sina-top-bar-ico-down{background-position:-40px -10px}
+.sina-top-bar-nav-show .sina-top-bar-nav-guide a:active,.sina-top-bar-nav-show .sina-top-bar-nav-guide a:hover,.sina-top-bar-nav-show .sina-top-bar-nav-guide a:link,.sina-top-bar-nav-show .sina-top-bar-nav-guide a:visited,.sina-top-bar-nav-show .sina-top-bar-nav-more a:active,.sina-top-bar-nav-show .sina-top-bar-nav-more a:hover,.sina-top-bar-nav-show .sina-top-bar-nav-more a:link,.sina-top-bar-nav-show .sina-top-bar-nav-more a:visited{color:#fa8200}
+.sina-top-bar-wrap-fixed .sina-top-bar-nav-list li{display:none}
+.sina-top-bar-wrap-fixed .sina-top-bar-nav-list .sina-top-bar-nav-first,.sina-top-bar-wrap-fixed .sina-top-bar-nav-list .sina-top-bar-nav-guide{display:block}
+.sina-top-bar-wrap-fixed .sina-top-bar-nav-mlnk{display:inline}
+.sina-top-bar-wrap-fixed .sina-top-bar-nav-slnk{display:none}
+.sina-top-bar-user img{border:0}
+.outlogin_layerbox_bylx .sina-top-bar-user-tip{width:452px;line-height:40px!important;font-size:16px!important;padding:10px 0 0 25px;position:absolute;background:#fff;left:0;right:25px;overflow:hidden}
+.TAP14 .ac-login .thumb,.TAP14 .ac-login-cnt .thumb{width:36px!important;float:left!important;overflow:hidden!important}
+.TAP14,.TAP14 .ac-login{position:relative!important}
+.outlogin_layerbox_bylx .sina-top-bar-user-tip span{color:#a87a2c}
+.TAP14{float:right!important;width:270px!important;height:57px!important;font:400 16px 'Microsoft Yahei';color:#333}
+.TAP14-logined{width:198px!important}
+.TAP14 .ac-icon{background-repeat:no-repeat!important;display:inline-block!important;vertical-align:text-bottom!important;overflow:hidden!important;background-image:url(http://i.sso.sina.com.cn/images/login/top_account_icon.png)}
+.TAP14 .ac-icon-message{width:14px!important;height:14px!important;background-position:0 0!important}
+.TAP14 .ac-icon-at,.TAP14 .ac-icon-bbs,.TAP14 .ac-icon-dot{width:16px!important;height:16px!important}
+.TAP14 .ac-icon-at{background-position:0 -20px!important}
+.TAP14 .ac-icon-dot{background-position:0 -40px!important}
+.TAP14 .ac-icon-bbs{background-position:0 -60px!important}
+.TAP14 .ac-icon-mail,.TAP14 .ac-icon-ment,.TAP14 .ac-icon-mvip{width:23px!important;height:16px!important}
+.TAP14 .ac-icon-mail{background-position:-20px -20px!important}
+.TAP14 .ac-icon-mvip{background-position:-20px -40px!important}
+.TAP14 .ac-icon-ment{background-position:-20px -60px!important}
+.TAP14 .ac-icon-ard,.TAP14 .ac-icon-aru{width:10px!important;height:6px!important}
+.TAP14 .ac-icon-aru{background-position:0 -80px!important}
+.TAP14 .ac-icon-ard{background-position:-20px -80px!important}
+.TAP14 .ac-login,.TAP14 .ac-login-cnt a{width:120px!important;height:57px!important}
+.TAP14 .ac-login{float:right!important;z-index:10}
+.TAP14 .ac-login-cnt{float:left!important;height:57px!important}
+.TAP14 .ac-login-cnt a{display:block!important;zoom:1!important;cursor:pointer!important}
+.TAP14 .ac-login a.active,.TAP14 .ac-login-cnt a:active,.TAP14 .ac-login-cnt a:hover{position:relative!important;border-width:0 1px!important;border-style:solid!important;width:118px!important;height:58px!important}
+.TAP14 .ac-login .thumb{margin:12px 0 0 13px!important;height:36px!important;border-radius:18px!important;border:none!important}
+.TAP14 .ac-login-cnt .thumb{border:none!important;outline:0!important}
+.TAP14 .ac-logined a.thumb,.TAP14 .ac-logined a.thumb:active,.TAP14 .ac-logined a.thumb:hover,.TAP14 .ac-logined a.thumb:link,.TAP14 .ac-logined a.thumb:visited{margin-left:0!important;border:none!important;width:36px!important;height:36px!important;overflow:hidden}
+.TAP14 .thumb img{float:left;border:none!important;outline:0!important}
+.TAP14 .ac-login .log-links{float:left!important;height:57px!important;line-height:56px!important;padding-left:14px!important}
+.TAP14 .ac-nl{font-family:Arial}
+.TAP14 .ac-logined{width:100px!important}
+.TAP14 .ac-logined .ac-login-cnt{width:75px!important;padding-left:25px!important;overflow:hidden!important}
+.TAP14 .ac-logined .active{width:74px!important;padding-left:24px!important;border-width:0 1px!important;border-style:solid!important}
+.TAP14 .ac-logined .thumb img{width:36px!important;height:36px!important;outline:0!important;border:none!important}
+.TAP14 .ac-dropdown,.TAP14 .ac-dropdown li,.TAP14 .msg-dropdown,.TAP14 .msg-lst li,.TAP14 .msg-tab li,.TAP14 .msg-tab li a.cur,.TAP14 .msg-tab span{border-style:solid!important}
+.TAP14 .ac-logined .ac-icon-ard,.TAP14 .ac-logined .ac-icon-aru{position:absolute!important;right:14px!important;top:27px!important}
+.TAP14 .ac-dropdown{position:absolute!important;top:57px!important;left:0!important;border-width:0 1px!important;width:98px!important;z-index:1000!important}
+.TAP14 .ac-dropdown li{border-width:0 0 1px!important;vertical-align:top!important;text-align:center!important}
+.TAP14 .ac-dropdown a,.TAP14 .ac-dropdown span{display:block!important;height:35px!important;line-height:35px!important;word-break:break-all!important;overflow:hidden!important;font-size:14px!important}
+.TAP14 .ac-dropdown span{cursor:default}
+.TAP14 .ac-dropdown a:hover{text-decoration:none!important}
+.TAP14 .ac-rgst,.TAP14 .message{position:relative!important;float:right!important;width:90px!important;z-index:3}
+.TAP14 .ac-rgst{width:60px!important}
+.TAP14 .ac-rgst .msg-link,.TAP14 .message .msg-link{position:relative!important;display:block!important;width:90px!important;height:57px!important;text-align:center!important;line-height:56px!important;text-decoration:none!important}
+.TAP14 .ac-rgst .msg-link{width:60px!important}
+.TAP14 .msg-link .ac-icon-message{position:absolute!important;right:14px!important;top:14px!important}
+.TAP14 .msg-link:hover .ac-icon-message{right:13px!important}
+.TAP14 .message .active,.TAP14 .message .msg-link:hover{position:relative!important;border-width:0 1px!important;border-style:solid!important;width:88px!important;height:58px!important;z-index:10}
+.TAP14 .msg-dropdown{position:absolute!important;top:57px!important;right:0!important;width:268px!important;border-width:1px!important;overflow:hidden!important;z-index:1000!important}
+.TAP14 .msg-dropdown .msg-tab{height:47px!important;width:275px!important}
+.TAP14 .msg-tab li{float:left!important;width:90px!important;border-width:0 0 1px!important}
+.TAP14 .msg-tab li a{display:block!important;height:34px!important;margin:0 4px!important;text-align:center!important;position:relative!important}
+.TAP14 .msg-tab li a.cur{position:relative!important;border-width:0 0 3px!important;height:31px!important}
+.TAP14 .msg-tab .ac-icon-message{position:absolute!important;top:-7px!important;right:12px!important}
+.TAP14 .msg-tab span{display:block!important;margin:14px -3px 0 0!important;height:14px!important;border-width:0 1px 0 0!important;padding-right:3px!important;line-height:16px!important}
+.TAP14 .msg-lst{overflow:hidden!important;clear:both!important}
+.TAP14 .msg-lst li{margin-top:-1px!important;height:28px!important;border-width:1px 0 0!important;padding:14px 14px 0!important;vertical-align:top!important;font-size:14px!important;line-height:1!important;cursor:pointer}
+.TAP14 .msg-lst .ac-icon{margin-right:6px!important}
+.TAP14 .msg-lst li a{float:right!important}
+.TAP14 .needlogin{padding:54px 0!important;text-align:center!important;font-size:14px!important}
+.TAP14 .needlogin a{padding-left:6px!important;text-decoration:underline!important}
+.TAP14 .css_check{visibility:hidden;height:0;width:120px}
+.TAP14 .ac-dropdown,.TAP14 .ac-dropdown li,.TAP14 .ac-login .active,.TAP14 .ac-login-cnt a:hover,.TAP14 .message .active,.TAP14 .message .msg-link:hover,.TAP14 .msg-dropdown,.TAP14 .msg-tab li,.TAP14 .msg-tab li a,.TAP14 .msg-tab span{border-color:#c7c7c7}
+.TAP14 .msg-lst li{border-color:#f4f4f4}
+.TAP14 .msg-tab li a.cur{border-color:#1976e8}
+.TAP14 .ac-dropdown,.TAP14 .ac-login .active,.TAP14 .ac-login-cnt:hover,.TAP14 .message .active,.TAP14 .message .msg-link:hover,.TAP14 .msg-dropdown{background:#fff}
+.TAP14 .ac-dropdown li a:hover,.TAP14 .msg-lst li:hover{background:#f4f4f4}
+.feed-card-item:hover,.feed-card-loading1{background-color:#fff}
+.TAP14 a:link,.TAP14 a:visited{color:#333;text-decoration:none}
+.TAP14 a:hover{color:#1976e8!important;text-decoration:none}
+.TAP14 .msg-tab li a.cur,.TAP14 a.list-link:hover,.TAP14 a.list-link:link,.TAP14 a.list-link:visited{color:#1976e8}
+.TAP14 .ac-login .log-links a:link,.TAP14 .ac-login .log-links a:visited,.TAP14 .ac-login a.msg-link:link,.TAP14 .ac-login a.msg-link:visited{color:#333}
+.feed-card-tabs{display:none}
+.feed-card-tab{border-top:none}
+.feed-wrap{border-top:2px solid #373737;margin-top:30px;padding-top:20px}
+.feed-wrap .feed-title{border-left:5px solid #1976e8;height:20px}
+.feed-wrap h3{font-size:18px;padding-left:10px;line-height:20px;font-weight:700;color:#333;margin-left:2px}
+.feed-wrap .sina-comment-wrap{border-top:1px solid #cdcdcd}
+.feed-card-loading1{border:1px solid #ccc;color:#767676;border-radius:0;font-size:14px}
+.feed-card-loading1:hover{background-color:#fff1d8;border-color:#ffcd8c;color:#1976e8}
+.feed-card-item:last-child{border-bottom:none}
+.feed-card-page .pagebox_num_nonce,.feed-card-page a:hover{border-color:#123586;background-color:#1976e8}
+#bdshare span.bds_more:hover{color:#1976e8}
+.site-header{margin-top:15px}
+.site-header .bread{line-height:20px;font-size:14px}
+.site-header .bread-spliter{margin:0 5px}
+.page-header{margin-top:15px}
+.page-header h1{font-size:36px;color:#333;font-weight:700;line-height:50px}
+.article,.article p,.time-source{font-size:14px}
+.page-info{margin-top:30px}
+.time-source{color:#333}
+.article p{line-height:2em;margin:15px 0}
+.article a,.article a:visited{color:#113eaa}
+.article a:hover{color:#1976e8;text-decoration:underline}
+.article_16,.article_16 .article-keywords,.article_16 p{font-size:16px}
+.article_18,.article_18 .article-keywords,.article_18 p{font-size:18px}
+.article-source{margin-top:15px}
+.article-editor{margin-top:5px}
+.img_wrapper{text-align:center;padding-bottom:5px;margin-top:30px}
+.img_wrapper img{display:block;margin:0 auto}
+.img_wrapper .img_descr{line-height:20px;display:inline-block;zoom:1;color:#666;padding:15px 0 0;margin:5px auto;font-size:14px;text-align:left}
+.outlogin_layerbox_bylx{z-index:2000!important}
+.sina-comment-form .ft .btn{width:35px}
+.sv_cont_c14 .sv_element{padding-top:2px!important}
+.sv_cont_c14 .sv_element input{margin:5px 3px 0 5px!important;vertical-align:top}
+.sv_option:after{display:block;height:0;clear:both}
+.sv_option{zoom:1}
+
+.img_wrapper img {max-width: 100%;}
+

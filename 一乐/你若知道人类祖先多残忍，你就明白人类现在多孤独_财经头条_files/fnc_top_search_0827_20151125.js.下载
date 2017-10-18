@@ -1,0 +1,118 @@
+function DivSelect(g,a,d){this.id=g;this.divId=a;this.divClassName=d||"selectView";this.ele=this.$(this.id);if(!this.ele){return;}var e=this;this.status="close";this.parentObj=this.ele.parentNode;while(this.readStyle(this.parentObj,"display")!="block"){if(this.parentObj.parentNode){this.parentObj=this.parentObj.parentNode;}else{break;}}this.parentObj.style.position="relative";var f=this.absPosition(this.ele,this.parentObj);this.ele.style.visibility="hidden";this.__div=document.createElement("div");if(a){this.__div.id=a;}if(this.divClassName){this.__div.className=this.divClassName;}this.parentObj.appendChild(this.__div);this.__div.style.width=this.ele.offsetWidth+"px";this.__div.style.position="absolute";this.__div.style.left=f.left+"px";this.__div.style.top=f.top+"px";this.__div.onclick=function(){e.click();};this.__div_count=document.createElement("div");this.__div.appendChild(this.__div_count);this.__div_count.className="ds_cont";this.__div_title=document.createElement("div");this.__div_count.appendChild(this.__div_title);this.__div_title.className="ds_title";this.__div_button=document.createElement("div");this.__div_count.appendChild(this.__div_button);this.__div_button.className="ds_button";this.__div_list=document.createElement("div");this.__div.appendChild(this.__div_list);this.__div_list.className="ds_list";this.__div_list.style.display="none";this.__div_listCont=document.createElement("div");this.__div_list.appendChild(this.__div_listCont);this.__div_listCont.className="dsl_cont";this.list=[];var b;for(var c=0;c<this.ele.options.length;c++){b=document.createElement("p");this.list.push(b);this.__div_listCont.appendChild(b);b.innerHTML=this.ele.options[c].innerHTML;if(this.ele.selectedIndex==c){this.__div_title.innerHTML=b.innerHTML;}b.num=c;b.onmouseover=function(){e.showSelectIndex(this.num);};b.onclick=function(){e.select(this.innerHTML);};}}DivSelect.prototype={showSelectIndex:function(a){if(typeof(a)==="undefined"){a=this.ele.selectedIndex;}if(typeof(this.showIndex)!=="undefined"){this.list[this.showIndex].className="";}this.showIndex=a;this.list[this.showIndex].className="selected";},select:function(a){for(var b=0;b<this.ele.options.length;b++){if(this.ele.options[b].innerHTML==a){this.ele.selectedIndex=b;if(this.ele.onchange){this.ele.onchange();}this.__div_title.innerHTML=a;break;}}},setIndex:function(a){if(a<0||a>=this.list.length){return;}this.ele.selectedIndex=a;if(this.ele.onchange){this.ele.onchange();}this.__div_title.innerHTML=this.list[a].innerHTML;},clickClose:function(b){var c=b.target?b.target:event.srcElement;var a=this;do{if(c==a.__div){return;}if(c.tagName=="BODY"){break;}c=c.parentNode;}while(c.parentNode);a.close();},keyDown:function(b){var a=this.showIndex;if(b.keyCode==38){a--;if(a<0){a=this.list.length-1;}this.showSelectIndex(a);this.stopDefault(b);}if(b.keyCode==40){a++;if(a>=this.list.length){a=0;}this.showSelectIndex(a);this.stopDefault(b);}if(b.keyCode==13||b.keyCode==9){this.setIndex(a);this.stopDefault(b);this.close();}if(b.keyCode==27){this.close();}},open:function(){var a=this;this.showSelectIndex();this.__div_list.style.display="block";this.status="open";this.__closeFn=function(b){a.clickClose(b);};this.__keyFn=function(b){a.keyDown(b);};this.addEvent(document,"click",this.__closeFn);this.addEvent(document,"keydown",this.__keyFn);},close:function(){var a=this;this.__div_list.style.display="none";this.status="close";this.delEvent(document,"click",this.__closeFn);this.delEvent(document,"keydown",this.__keyFn);},click:function(){if(this.status=="open"){this.close();}else{this.open();}},$:function(objName){if(document.getElementById){return eval('document.getElementById("'+objName+'")');}else{return eval("document.all."+objName);}},addEvent:function(c,a,b){if(c.attachEvent){c.attachEvent("on"+a,b);}else{c.addEventListener(a,b,false);}},delEvent:function(c,a,b){if(c.detachEvent){c.detachEvent("on"+a,b);}else{c.removeEventListener(a,b,false);}},readStyle:function(c,b){if(c.style[b]){return c.style[b];}else{if(c.currentStyle){return c.currentStyle[b];}else{if(document.defaultView&&document.defaultView.getComputedStyle){var a=document.defaultView.getComputedStyle(c,null);return a.getPropertyValue(b);}else{return null;}}}},absPosition:function(h,c){var g=h.offsetLeft;var f=h.offsetTop;var a=h.offsetParent;var b="";try{while(a.id!=document.body&&a.id!=document.documentElement&&a!=c&&a!=null){b+=a.tagName+" , ";a=a.offsetParent;g+=a.offsetLeft;f+=a.offsetTop;}}catch(d){}return{left:g,top:f};},stopDefault:function(a){if(a.preventDefault){a.preventDefault();}else{a.returnValue=false;}}};
+
+// Search suggest
+(function() {
+
+    var searchType2 = new DivSelect('slt_02');
+    var SuggestServer01 = new SuggestServer();
+    SuggestServer01.bind({
+        "input": "suggest01_input",
+        "default": "",
+        "type": "",
+        "width": 300,
+        "link": "http://biz.finance.sina.com.cn/suggest/lookup_n.php?country=@type@&q=@code@",
+        "head": ["\u9009\u9879", "\u7C7B\u578B", "\u4EE3\u7801", "\u4E2D\u6587\u540D\u79F0"],
+        "body": [-1, -2, 2, 4],
+        'target': '_blank',
+        //0827
+        "callback": function(data, type) {
+            var type = this._getType(type["1"]);
+            var sel = document.getElementById('slt_02');
+            if (sel && (sel.selectedIndex == 0 || sel.selectedIndex == 3))
+                window.open('http://biz.finance.sina.com.cn/suggest/lookup_n.php?country=' + type + '&q=' + data);
+        },
+
+        onshow: function() {
+            SuggestServer01._elementContainer.style.left = document.getElementById('slt_02').parentNode.offsetLeft + 'px';
+        }
+    });
+
+    document.getElementById('slt_02').onchange = function() {
+        try{SUDA.uaTrack('finance_index_shortlist', 'top_search_change');}catch(e){}
+
+        switch (this.selectedIndex) {
+            case 0:
+                SuggestServer01.changeType('stock');
+                SuggestServer01.changeLink("http://biz.finance.sina.com.cn/suggest/lookup_n.php?country=@type@&q=@code@");
+                SuggestServer01._objectConfig['value'] = '@2@';
+                SuggestServer01._stringOriginalValue = '简称/代码/拼音';
+                if (SuggestServer01._elementInput.value == '请输入关键字') {
+                    SuggestServer01._elementInput.value = '简称/代码/拼音';
+                }
+                break;
+            case 1:
+                SuggestServer01.changeLink("http://guba.sina.com.cn/?s=bar&name=@code@");
+                SuggestServer01._objectConfig['value'] = '@2@';
+                SuggestServer01._stringOriginalValue = '简称/代码/拼音';
+                if (SuggestServer01._elementInput.value == '请输入关键字') {
+                    SuggestServer01._elementInput.value = '简称/代码/拼音';
+                }
+                break;
+            case 2:
+                SuggestServer01.changeLink("http://search.sina.com.cn/?range=all&c=news&col=1_7&q=@4@");
+                SuggestServer01._objectConfig['value'] = '@4@';
+                SuggestServer01._stringOriginalValue = '请输入关键字';
+                if (SuggestServer01._elementInput.value == '简称/代码/拼音') {
+                    SuggestServer01._elementInput.value = '请输入关键字';
+                }
+                break;
+            case 3:
+                SuggestServer01.changeType('7');
+                SuggestServer01.changeLink("http://biz.finance.sina.com.cn/suggest/lookup_n.php?country=@type@&q=@code@");
+                SuggestServer01._objectConfig['value'] = '@2@';
+                SuggestServer01._stringOriginalValue = '简称/代码/拼音';
+                if (SuggestServer01._elementInput.value == '请输入关键字') {
+                    SuggestServer01._elementInput.value = '简称/代码/拼音';
+                }
+                break;
+            default:
+                return;
+        }
+    };
+
+    window.changeViewInputs_0 = function(__elementSelect) {
+        document.getElementById('suggest01_input').value = "简称/代码/拼音";
+        suggestServer_0.changeType(__elementSelect.value);
+    }
+
+    window.checkFormSuggest_0 = function(__formSuggest) {
+        __formSuggest["c"].value = 'all';
+        var __stringCode = document.getElementById('suggest01_input').value;
+        if (__stringCode != "简称/代码/拼音" && __stringCode != "请输入关键字" && __stringCode != "") {
+            var stringUrl = "";
+            // 如果搜的是行情
+            if (document.getElementById('slt_02').selectedIndex == 0) {
+                stringUrl = "http://biz.finance.sina.com.cn/suggest/lookup_n.php";
+                // 如果suggest内容可见，且已经有使用键盘上下键在suggest list里选中，则不提交表单，改由suggest组件内部处理
+                try {
+                    if (!$('#topSearch').find('table').is(':hidden') && $('#topSearch').find('tr').filter(function(i) {
+                            if ($(this).css('background-color') == 'rgb(241, 245, 252)') {
+                                return true;
+                            }
+                        }).length > 0) {
+                        return false;
+                    }
+                } catch (e) {}
+            }
+            if (document.getElementById('slt_02').selectedIndex == 1) {
+                stringUrl = "http://guba.sina.com.cn/bar.php";
+            }
+            if (document.getElementById('slt_02').selectedIndex == 2) {
+                stringUrl = "http://search.sina.com.cn/";
+                __formSuggest["c"].value = 'news';
+                __formSuggest["t"].value = '';
+            }
+            __formSuggest.action = stringUrl;
+            __formSuggest["name"].value = __stringCode;
+            __formSuggest["k"].value = __stringCode;
+        } else {
+            try {
+                document.getElementById('suggest01_input').value = "";
+                document.getElementById('suggest01_input').focus();
+            } catch (e) {}
+
+            return false;
+        }
+    }
+    document.getElementById('siteSearch').style.visibility = 'visible';
+})();

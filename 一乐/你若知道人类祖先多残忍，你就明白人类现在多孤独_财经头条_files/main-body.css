@@ -1,0 +1,95 @@
+/*通栏*/
+/*.xb-logo{float:left;width:108px;height:33px;padding: 8px 15px 0 0;}
+.xb-nav{position: relative;float: left;}
+.xb-nav > li{float:left;margin-left: 2px;height: 45px;line-height: 45px;text-align:center;}
+.xb-nav > li > a{display:block;font-size:14px;color:#666;}
+.xb-nav > li > a:hover,.xb-nav > li > .xb-nav-focus{color:#fff;background:#1976e8;}*/
+/*样式覆盖*/
+/*.sina15-nav a{padding:0 15px;-webkit-transition:none;transition:none;}
+.sina15-nav-list-last .sina15-icon {margin-left: 5px;}
+.sina15-nav-others{left: initial;right: 0;}
+.sina15-nav-others li:last-child{border: none;}
+.xb-tt{float: right;margin-left:5px;height: 45px;line-height: 45px;font-size: 14px;color: #666;}
+.desktop-side-tool .side-tool-small .icon{background-image:url("//n.sinaimg.cn/finance/caitou/houtai/img/sideIcon.png")!important;background-repeat:no-repeat!important;}*/
+/*统一样式*/
+.left .article h1,.article h2,.article h3,.article h4,.article h5,.article h6{font-weight: normal!important;font-size: 16px!important;line-height: 2em!important;text-indent: 2em!important;}
+.left .article {/*word-break:break-all;*/word-wrap:break-word;color:#333;font-size:16px;line-height:2em;overflow:hidden;}
+.left .article img {display:block;margin: 0 auto;max-width: 660px;}
+.left .article a {color:#0583e6;}
+.left .article u,.left .article ins {text-decoration:none}
+/*.left .article b,.left .article strong {font-weight:normal}*/
+.left .article p,.left .article div {margin-bottom:1em}
+.left .article p {text-indent: 2em!important;padding: 0!important;}
+.left .article p:last-child,.left .article div:last-child {margin-bottom:0}
+.left .article iframe {border:0;width:600px}
+.left .article video {width:100%;max-height:400px;background-color:#000}
+/*作者历史文章*/
+.feed-wrap .feed-c{display:block;width: 660px;}
+.feed-title h3{margin-left: 2px;padding-left: 10px;line-height: 20px;font-size: 18px;font-weight: 700;color: #333;}
+.feed-c .article-item{padding:18px 0 20px;border-bottom: 1px solid #e5e5e5;line-height: 20px;}
+.feed-c .article-item a{color: #333;text-decoration: none;}
+.feed-wrap .feed-c .article-item a:hover{color: #0074cc;}
+.article-item .title{height: 28px;line-height: 28px;font-size: 20px;font-weight: bold;overflow: hidden;}
+.article-con{margin-top:15px;width:660px;line-height:26px;font-size: 15px;overflow: hidden;text-overflow:ellipsis; -o-text-overflow:ellipsis;}
+.article-con .art-img{float: left;margin: 5px 15px 0 0;width: 130px;height: 85px;}
+.art-img img{width: 130px;height: 85px;}
+.article-con .art-text{float: right;width: 515px;line-height: 26px;color: #555;font-size: 15px;overflow: hidden;text-overflow:ellipsis; -o-text-overflow:ellipsis;}
+.article-time{float: left;margin-top: 12px;height: 20px;font-size: 14px;color: #555;}
+.blank{margin-left: 8px;}
+.art-loading{display: block;width:660px;height:150px; background:url(https://i3s.sinaimg.cn/cj/news/2009/0525/progress.gif) no-repeat center;}
+.art-blank{margin-top:20px;width: 660px;line-height: 20px;font-size: 14px;color: #c3c0b9;text-align: center;}
+.article-error{text-align: center;padding-top: 100px;color: #999;font-size: 14px;line-height: 6;}
+/*分页*/
+.pages-demo{margin-top: 10px;}
+.pages-w {height:32px; line-height:30px; font-size:12px; text-align:center;}
+.pages-w a {display:inline-block; *zoom:1; margin-right:5px; width:30px; height:30px;border: 1px solid #e4e4e4;border-radius: 2px;-moz-border-radius:2px;
+-webkit-border-radius: 2px;vertical-align: bottom; line-height:30px; text-align:center; background:#f6f5f4; cursor:pointer; color:#333;}
+.pages-w a.pages-llt,.pages-w a.pages-lt,.pages-w a.pages-rt,.pages-w a.pages-rrt{background: url(//n.sinaimg.cn/finance/caitou/houtai/img/page_icon.png) no-repeat;}
+.pages-w a.pages-llt{background-position: 0 -64px;}
+.pages-w a.pages-llt:hover{background-position: -32px -64px;}
+.pages-w a.pages-lt{background-position: 0 0;}
+.pages-w a.pages-lt:hover{background-position: -32px 0;}
+.pages-w a.pages-rt{background-position: 0 -32px;}
+.pages-w a.pages-rt:hover{background-position: -32px -32px;}
+.pages-w a.pages-rrt{background-position: 0 -96px;}
+.pages-w a.pages-rrt:hover{background-position: -32px -96px;}
+.pages-w a.page-cur {border: 1px solid #b8b8b8;background:#1976e8;color: #ffffff;}
+.pages-w a.page-cur:link,.pages-w a.page-cur:visited,.pages-w a.page-cur:active,.pages-w a.page-cur:hover,.pages-w a.page-cur:focus { color:#444; text-decoration:none; }
+.pages-disable {filter:alpha(opacity=90); opacity: 0.9;}
+.pages-disable a { cursor:inherit;}
+.pages-disable a:hover { text-decoration:none;}
+/*头条入驻*/
+.right .toutiao{display: block;margin-top: 33px;width:170px;height:48px;background: url(//n.sinaimg.cn/finance/caitou/houtai/img/pic13.png) no-repeat;}
+.right .toutiao:hover{filter:alpha(opacity=80); opacity: 0.8;}
+/*用户信息*/
+.right .user-info{margin-top: 25px;width: 276px;padding: 22px 0 20px 22px;border:1px solid #eceae8;background: #fbfbfa;}
+.right .user-info .user-blk{float:left;width:55px;height:55px;}
+.right .user-info .user-blk img{width:50px;height: 50px; border-radius:9999px;cursor:default;}
+.right .user-info .info-blk{float: right;margin-right: 30px;width:185px;padding-top: 3px;}
+.right .user-info .info-t{display: block;margin-bottom: 5px;padding-bottom:8px;border-bottom: 1px solid #eceae8;color: #0076a2;font-size: 16px;font-weight: bold;}
+.right .user-info span{color: #7f7c77;font-size: 13px;line-height:150%;}
+
+/*排行*/
+.right .rank-blk{margin: 35px 0 60px;}
+.tt{display:block;width: 150px;height: 20px;padding-left:8px;border-left: 5px solid #006da4;line-height: 20px;color: #343535;font-size: 18px;font-weight: bold;}
+.rank-blk .rank-tabs{margin-top:20px;width:300px;height: 35px;line-height: 35px;background: #f5f6f7;}
+.rank-blk .rank-tabs span{float:left;width:100px;height: 45px;font-size: 14px;text-align: center;}
+.rank-blk .rank-tabs .tab-active{background-image:url(//n.sinaimg.cn/finance/caitou/houtai/img/pic14.png);background-repeat:no-repeat;background-position:50px 0;}
+.rank-blk .rank-tabs .tab-active a{color:#0074cc;}
+.right .rank-blk ul{margin-top: 10px;width:300px;}
+.right .rank-blk ul .gray{background: #f5f6f7;}
+.right .rank-blk li{width:300px;height:36px;line-height: 36px;font-size: 14px;overflow: hidden;text-overflow:ellipsis; -o-text-overflow:ellipsis;white-space:nowrap;}
+.right .rank-blk li a{color:#000;}
+.right .rank-blk li a:hover{color:#0074cc;}
+.right .rank-blk li span{float: left;margin:10px 8px 0 10px;width: 20px;height: 16px;line-height: 16px;font-size: 12px;color: #fff;text-align: center;background: url(//n.sinaimg.cn/finance/caitou/houtai/img/list.png) no-repeat;}
+.right .rank-blk li .list-one{background-position:0 0 ;}
+.right .rank-blk li .list-two{background-position:0 -36px ;}
+.right .rank-blk li .list-three{background-position: 0 -72px;}
+.right .rank-blk li .list-others{background-position: 0px -108px;}
+.right .rank-blk .u-article-no-hot{margin-top: 10px;font-size: 14px;color: #c3c0b9;line-height: 20px;text-align: center;}
+
+/*底部*/
+.footer{margin-top:70px;padding:10px 0;text-align: center;background:#202020;color:#d5d5d5;}
+.footer .xb-blank{margin:0 25px;color: #9F9F9F;}
+.footer a,.footer a:hover,.footer a:visited{font-size:14px;color:#d5d5d5;}
+.footer p{margin-top:10px;font-size:12px;color:#666;}

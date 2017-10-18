@@ -1,0 +1,214 @@
+(function() {
+    var pages, flag = false;
+    var $articleList = $('#art-items');
+    var $loading = $articleList.siblings('#art-loading');
+    var articlePagesCount = 1;
+   
+    init();
+    $(".rank-blk ul li:even").addClass("gray");
+    // 排行tab
+    var rankTab = new Tab({
+        bonds: [
+            ['tab0', 'tab_con0'],
+            ['tab1', 'tab_con1'],
+            ['tab2', 'tab_con2'],
+        ],
+        selected: 'tab-active',
+        trigger: 'mouseover'
+    });
+
+    function init() {  
+        $('#pages-demo').hide();
+        pages = new Pages({
+            wrap: 'pages-demo',
+            total: articlePagesCount,
+            maxShow: 5,
+            onIndex: 0,
+            onPGReady: function(s) {
+                var tid = setTimeout(function(argument) {
+                    clearTimeout(tid);
+                    pages.gotoPage(1);
+                }, 0)
+            },
+            onEachPage: onEachPage
+        });
+    }
+
+    function onEachPage(status) {
+        // 禁用pages
+        pages.enable(false);
+        // 清空文章列表容器
+        $articleList.html('');
+        // 回历史文章顶部
+        if(flag){
+            $(window).scrollTop($("#relatedNewsWrap").offset().top);
+        }
+        // 显示loading
+        $loading.show();
+        // 请求文章列表
+        getArticleList(status.onIndex, getArticleListDone, getArticleListFail, getArticleListAlways);
+    }
+
+    function getArticleList(pageIndex, done, fail, always) {
+        $.ajax({
+            url: baseUrl + '/article/history',
+            type: 'get',
+            dataType: 'jsonp',
+            data: {
+                uid: author_uid,
+                id: article_id,
+                page: pageIndex,
+                count: 10
+            }
+        }).done(function(data) {
+            if (data && data.result.status.code === 0) {
+                done(data.result.data);
+            } else {
+                handlerErro('UNEXCEPT_DATA');
+            }
+        }).fail(fail).always(always);
+    }
+
+    function getArticleListDone(articleData) {
+        getArticleListDone = function(articleData) {
+                var addPagesCount = articleData.totalpage - articlePagesCount;
+                var lists = articleData.lists;
+                // 检测pages变动
+                if (addPagesCount) {
+                    pages.enable(true);
+                    pages.addPages(addPagesCount);
+                    articlePagesCount += addPagesCount;
+                }
+                if (lists.length) {
+                    // 渲染文章列表
+                    renderArticleList(lists);
+                } else {
+                    handlerErro('EMPTY_DATA');
+                }
+            }
+            // 执行公共部分
+        getArticleListDone(articleData);
+        // 显示翻页控件
+        $('#pages-demo').show();
+         // $loading.hide();
+    }
+
+    function getArticleListFail() {
+        handlerErro('NETWORK_ERRO');
+    }
+
+    function getArticleListAlways() {
+        // 隐藏loading
+        $loading.hide();
+        // 是否启用pages
+        if (articlePagesCount == 1) {
+            $('#pages-demo').hide();
+            pages.enable(false);
+        } else {
+            flag = true;
+            pages.enable(true);
+        }
+    }
+
+    function handlerErro(error) {
+        var str;
+        switch (error) {
+            case 'NETWORK_ERRO':
+                str = '网络异常，请刷新重试';
+                break;
+            case 'UNEXCEPT_DATA':
+                str = '服务器异常，请刷新重试';
+                break;
+            case 'EMPTY_DATA':
+                str = '暂无文章';
+                break;
+            default:
+                str = '';
+        }
+        $articleList.html('<div class="article-error"><img src="//n.sinaimg.cn/finance/caitou/houtai/img/air.png"><p>' + str + '</p></div>');
+    }
+
+    function renderArticleList(articleList) {
+        var article, artUrl, summary, title, time, imgs, imgCount;
+        var i = 0;
+        var len = articleList.length;
+        var htmlStr = '';
+        
+        for (; i < len; i++) {
+            article = articleList[i];
+            artUrl = article.url.replace("http:", "");
+            summary = article.summary;
+            title = article.title;
+            time = article.create_time;
+            imgs = article.img;
+            imgCount = imgs.length;
+            if (imgCount == 0) {
+                htmlStr += '<div class="article-item clearfix">' 
+                + '<a  class="title"  href=" '+ artUrl +'" target="_blank">' + title + '</a>' 
+                + '<div class="article-con" >' 
+                + '<a  href=" '+ artUrl +'" target="_blank">' + summary + '</a>' 
+                + '<a   href=" '+ artUrl +'" target="_blank">[详细]</a></div>' 
+                + '<a class="article-time" href=" '+ artUrl +'">' + formatTime(time * 1000) + '</a>' 
+                + '</div>';
+            } else {
+                htmlStr += '<div class="article-item clearfix">' 
+                + '<a  class="title" href=" '+ artUrl +'" target="_blank">' + title + '</a>' 
+                + '<div class="article-con clearfix">' 
+                + '<a class="art-img" href=" '+ artUrl +'" target="_blank"><img src="' + imgs[0].replace("http:", "") + '"></a>' 
+                + '<div class="art-text">' 
+                + '<a href=" '+ artUrl +'"  target="_blank">' + summary + '</a>' 
+                + '<a href=" '+ artUrl +'"  target="_blank">[详细]</a>'
+                + '</div></div>'
+                // + '<a class="article-time" href=" '+ artUrl +'">' + formatTime(time * 1000) + '</a>' 
+                + '<span class="article-time">' + formatTime(time * 1000) + '</span>' 
+                + '</div></div>';
+            }
+        }
+        $articleList.html(htmlStr);
+        $(".feed-c .article-item:last-of-type").css("borderBottom", 0);
+    }
+
+    function formatTime(time, semantic) {
+        time = +time;
+        var nowTime, diff, fTime, dateObj;
+
+        if (!semantic) {
+            dateObj = new Date(time);
+            fTime = dateObj.getFullYear() + '年 ' + completeZero(dateObj.getMonth() + 1) + '月' + completeZero(dateObj.getDate()) + '日 ' + completeZero(dateObj.getHours()) + ':' + completeZero(dateObj.getMinutes());
+        } else {
+            nowTime = Date.now();
+            diff = nowTime - time;
+            if (diff < 0) {
+                // 客户端时间错误
+                dateObj = new Date(time);
+                fTime = completeZero(dateObj.getMonth() + 1) + '月' + completeZero(dateObj.getDate()) + '日 ' + completeZero(dateObj.getHours()) + ':' + completeZero(dateObj.getMinutes());
+            } else if (diff < 60 * 1000) {
+                // 1分钟内
+                fTime = '一分钟内';
+            } else if (diff < 60 * 60 * 1000) {
+                // 一小时内
+                fTime = (diff / 60 / 1000 | 0) + '分钟前';
+            } else if (diff < 24 * 60 * 60 * 1000) {
+                // 一天内
+                fTime = (diff / 60 / 60 / 1000 | 0) + '小时前';
+            } else {
+                // 超过一天
+                dateObj = new Date(time);
+                fTime = completeZero(dateObj.getMonth() + 1) + '月' + completeZero(dateObj.getDate()) + '日 ' + completeZero(dateObj.getHours()) + ':' + completeZero(dateObj.getMinutes());
+            }
+        }
+
+        return fTime;
+    }
+
+    function completeZero(number, count) {
+        count = count || 2;
+        number = number + '';
+        var len = number.length;
+
+        if (len < count) {
+            number = (Math.pow(10, count - len) + '').substring(1) + number;
+        }
+        return number;
+    }
+})();
